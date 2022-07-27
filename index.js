@@ -1,6 +1,8 @@
 const express = require('express')
 const morgan = require('morgan');
 const cors = require('cors')
+require('dotenv').config()
+const Person = require('./models/person')
 
 const app = express()
 
@@ -69,15 +71,16 @@ app.post('/api/persons', (req, res) => {
           error: 'name must be unique' 
         })
     }
-    const person = {
+    
+    const person = new Person({
         name : body.name,
         number : body.number,
-        id : randID()
-    }
-
+    })
+    person.save().then(savedPerson => 
+        res.json(savedPerson)
+    )
     persons = persons.concat(person) 
     console.log(persons)
-    res.json(person)
 })
 
 const PORT = process.env.PORT || 3001
