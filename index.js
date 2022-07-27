@@ -26,6 +26,7 @@ app.get('/info', (req, res) => {
 
 app.get('/api/persons', (req, res) => {
     Person.find({}).then(persons => {
+        console.log('get api/persons', res)
         res.json(persons)
         })
     })
